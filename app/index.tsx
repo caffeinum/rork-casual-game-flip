@@ -11,14 +11,15 @@ import { router } from 'expo-router';
 const { height } = Dimensions.get('window');
 
 export default function GameFeedScreen() {
-  const { games, currentGameIndex, setCurrentGameIndex, isPlaying, startGame, isLoading } = useGameStore();
+  const { games, currentGameIndex, setCurrentGameIndex, startGame, isLoading } = useGameStore();
   const [scale, setScale] = useState(1);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const flatListRef = useRef<FlatList>(null);
 
   const handlePinchGesture = (event: any) => {
     if (Platform.OS === 'web') {
       // Simple implementation for web
-      if (event.nativeEvent.scale > 1.2 && !isPlaying) {
+      if (event.nativeEvent.scale > 1.2) {
         const nextIndex = (currentGameIndex + 1) % games.length;
         setCurrentGameIndex(nextIndex);
         flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
@@ -30,7 +31,7 @@ export default function GameFeedScreen() {
       }
       
       if (event.nativeEvent.state === State.END) {
-        if (scale > 1.2 && !isPlaying) {
+        if (scale > 1.2) {
           const nextIndex = (currentGameIndex + 1) % games.length;
           setCurrentGameIndex(nextIndex);
           flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
@@ -45,6 +46,20 @@ export default function GameFeedScreen() {
     startGame();
   };
 
+  const handleNavigate = (direction: 'up' | 'down') => {
+    let nextIndex = currentGameIndex;
+    if (direction === 'up' && currentGameIndex > 0) {
+      nextIndex = currentGameIndex - 1;
+    } else if (direction === 'down' && currentGameIndex < games.length - 1) {
+      nextIndex = currentGameIndex + 1;
+    }
+    
+    if (nextIndex !== currentGameIndex) {
+      setCurrentGameIndex(nextIndex);
+      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+    }
+  };
+
   if (isLoading) {
     return <View style={styles.loadingContainer} />;
   }
@@ -55,45 +70,47 @@ export default function GameFeedScreen() {
       onHandlerStateChange={handlePinchGesture}
     >
       <View style={styles.container} testID="game-feed-screen">
-        {isPlaying ? (
-          <GameContainer game={games[currentGameIndex]} />
-        ) : (
-          <FlatList
-            ref={flatListRef}
-            data={games}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
-              <GamePreview 
-                game={item} 
-                onPlay={() => handlePlayGame(index)}
-              />
-            )}
-            pagingEnabled
-            showsVerticalScrollIndicator={false}
-            snapToInterval={height - 100}
-            decelerationRate="fast"
-            initialScrollIndex={currentGameIndex}
-            getItemLayout={(_, index) => ({
-              length: height - 100,
-              offset: (height - 100) * index,
-              index,
-            })}
-            onMomentumScrollEnd={(event) => {
-              const index = Math.round(
-                event.nativeEvent.contentOffset.y / (height - 100)
-              );
-              setCurrentGameIndex(index);
-            }}
-          />
-        )}
-        {!isPlaying && (
-          <TouchableOpacity 
-            style={styles.submitButton}
-            onPress={() => router.push('/submit-game')}
-          >
-            <Plus color={COLORS.text} size={24} />
-          </TouchableOpacity>
-        )}
+        <FlatList
+          ref={flatListRef}
+          data={games}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => (
+            <GamePreview 
+              game={item} 
+              onPlay={() => handlePlayGame(index)}
+              isActive={index === currentGameIndex}
+              onPlayingChange={(playing) => {
+                if (index === currentGameIndex) {
+                  setScrollEnabled(!playing);
+                }
+              }}
+              onNavigate={handleNavigate}
+            />
+          )}
+          pagingEnabled
+          showsVerticalScrollIndicator={false}
+          snapToInterval={height - 100}
+          decelerationRate="fast"
+          initialScrollIndex={currentGameIndex}
+          scrollEnabled={scrollEnabled}
+          getItemLayout={(_, index) => ({
+            length: height - 100,
+            offset: (height - 100) * index,
+            index,
+          })}
+          onMomentumScrollEnd={(event) => {
+            const index = Math.round(
+              event.nativeEvent.contentOffset.y / (height - 100)
+            );
+            setCurrentGameIndex(index);
+          }}
+        />
+        <TouchableOpacity 
+          style={styles.submitButton}
+          onPress={() => router.push('/submit-game')}
+        >
+          <Plus color={COLORS.text} size={24} />
+        </TouchableOpacity>
       </View>
     </PinchGestureHandler>
   );

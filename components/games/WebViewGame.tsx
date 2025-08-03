@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, ActivityIndicator, Platform, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { X } from 'lucide-react-native';
 import { COLORS } from '@/constants/colors';
 
 interface WebViewGameProps {
@@ -19,9 +18,6 @@ export function WebViewGame({ gameUrl, title, onGameOver }: WebViewGameProps) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity onPress={() => onGameOver(0)}>
-          <X size={24} color="white" />
-        </TouchableOpacity>
       </View>
       
       {Platform.OS === 'web' ? (
