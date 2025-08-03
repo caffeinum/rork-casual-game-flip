@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Dimensions, Platform, TouchableOpacity } from 'react-native';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import { COLORS } from '@/constants/colors';
@@ -7,6 +7,8 @@ import GameContainer from '@/components/GameContainer';
 import { useGameStore } from '@/hooks/use-game-store';
 import { Plus } from 'lucide-react-native';
 import { router } from 'expo-router';
+import { Accelerometer } from 'expo-sensors';
+import * as Haptics from 'expo-haptics';
 
 const { height } = Dimensions.get('window');
 
@@ -15,6 +17,7 @@ export default function GameFeedScreen() {
   const [scale, setScale] = useState(1);
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const flatListRef = useRef<FlatList>(null);
+  const lastShakeTime = useRef(0);
 
   const handlePinchGesture = (event: any) => {
     if (Platform.OS === 'web') {
@@ -60,6 +63,38 @@ export default function GameFeedScreen() {
     }
   };
 
+  // Shake detection for next game
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+
+    const threshold = 2.5; // Shake sensitivity
+    let subscription: any;
+
+    Accelerometer.setUpdateInterval(100);
+    
+    subscription = Accelerometer.addListener((data) => {
+      const acceleration = Math.sqrt(
+        data.x * data.x + data.y * data.y + data.z * data.z
+      );
+      
+      const currentTime = Date.now();
+      if (acceleration > threshold && currentTime - lastShakeTime.current > 1000) {
+        lastShakeTime.current = currentTime;
+        
+        // Move to next game
+        const nextIndex = (currentGameIndex + 1) % games.length;
+        setCurrentGameIndex(nextIndex);
+        flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
+    });
+
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
+  }, [currentGameIndex, games.length]);
 
   if (isLoading) {
     return <View style={styles.loadingContainer} />;
