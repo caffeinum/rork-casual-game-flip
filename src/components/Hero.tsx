@@ -22,15 +22,17 @@ const Hero = () => {
             <Ghost className="w-24 h-24 mx-auto text-snap-white drop-shadow-lg" />
           </div>
           
-          {/* Main heading - Original text with Snapchat style */}
-          <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black mb-4 sm:mb-6 text-snap-white drop-shadow-2xl leading-tight animate-slide-up">
-            Discover Great Games,
+          {/* Main heading - More prominent text */}
+          <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black mb-4 sm:mb-6 leading-tight animate-slide-up">
+            <span className="text-snap-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">Discover Great </span>
+            <span className="text-snap-black drop-shadow-[0_4px_8px_rgba(255,255,255,0.8)]">Games</span>
+            <span className="text-snap-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">,</span>
             <br />
-            <span className="text-snap-black">Fast</span>
+            <span className="text-snap-black drop-shadow-[0_4px_8px_rgba(255,255,255,0.8)]">Fast</span>
           </h1>
           
-          {/* Original description with Snapchat styling */}
-          <p className="text-base sm:text-lg text-snap-black/80 mb-8 sm:mb-12 max-w-2xl mx-auto animate-slide-up delay-200 px-4 leading-relaxed">
+          {/* More prominent description */}
+          <p className="text-base sm:text-lg text-snap-black font-bold mb-8 sm:mb-12 max-w-2xl mx-auto animate-slide-up delay-200 px-4 leading-relaxed drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
             Swipe through instant-play games in seconds. No downloads, no ads, no friction. 
             Just pure gameplay in a TikTok-style feed designed for gamers.
           </p>
