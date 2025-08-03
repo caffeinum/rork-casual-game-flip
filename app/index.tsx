@@ -60,6 +60,7 @@ export default function GameFeedScreen() {
     }
   };
 
+
   if (isLoading) {
     return <View style={styles.loadingContainer} />;
   }
@@ -89,18 +90,18 @@ export default function GameFeedScreen() {
           )}
           pagingEnabled
           showsVerticalScrollIndicator={false}
-          snapToInterval={height - 100}
+          snapToInterval={height}
           decelerationRate="fast"
           initialScrollIndex={currentGameIndex}
           scrollEnabled={scrollEnabled}
           getItemLayout={(_, index) => ({
-            length: height - 100,
-            offset: (height - 100) * index,
+            length: height,
+            offset: height * index,
             index,
           })}
           onMomentumScrollEnd={(event) => {
             const index = Math.round(
-              event.nativeEvent.contentOffset.y / (height - 100)
+              event.nativeEvent.contentOffset.y / height
             );
             setCurrentGameIndex(index);
           }}

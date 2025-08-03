@@ -19,9 +19,11 @@ const { width, height } = Dimensions.get('window');
 export default function GamePreview({ game, onPlay, isActive, onPlayingChange, onNavigate }: GamePreviewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Reset playing state when becoming inactive
+  // Auto-play when becoming active, reset when becoming inactive
   React.useEffect(() => {
-    if (!isActive) {
+    if (isActive && !isPlaying) {
+      handlePlay();
+    } else if (!isActive && isPlaying) {
       setIsPlaying(false);
     }
   }, [isActive]);
@@ -144,7 +146,7 @@ export default function GamePreview({ game, onPlay, isActive, onPlayingChange, o
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 100, // Account for tab bar and status bar
+    height, // Full screen height
     backgroundColor: COLORS.background,
   },
   previewImage: {
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 12,
-    marginBottom: 40,
+    marginBottom: 80,
   },
   playButton: {
     backgroundColor: COLORS.primary,
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: 100,
+    top: 60,
     right: 20,
     width: 44,
     height: 44,
