@@ -26,5 +26,5 @@ jobs:
       - name: install dependencies
         run: bun install --frozen-lockfile
 
-      - name: deploy on eas
-        run: eas deploy --auto --non-interactive
+      - name: deploy on eas  
+        run: eas deploy
