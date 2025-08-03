@@ -24,27 +24,30 @@ export async function POST(request: Request) {
     // Generate unique ID
     const gameId = `user-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
-    // Insert into submissions table (or games table with pending status)
+    // Use a placeholder image if none provided (you can update this to a better default)
+    const image = `https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop&text=${encodeURIComponent(data.title)}`;
+
+    // Insert directly into games table
     await query(
-      `INSERT INTO game_submissions 
-       (id, title, author, description, preview_gif, game_url, submitted_by, status, created_at) 
+      `INSERT INTO games 
+       (id, title, description, image, preview_video, preview_gif, type, game_url, created_at) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP)`,
       [
         gameId,
         data.title,
-        data.author,
-        data.description,
+        data.description || `Created by ${data.author}`,
+        image,
+        null, // no preview video
         data.previewGif,
-        data.gameUrl,
-        anonToken,
-        'pending'
+        'webview', // user-submitted games are always webview
+        data.gameUrl
       ]
     );
 
     return Response.json({
       success: true,
       gameId,
-      message: 'Game submitted successfully'
+      message: 'Game added successfully!'
     }, {
       headers: {
         'x-anon-token': anonToken

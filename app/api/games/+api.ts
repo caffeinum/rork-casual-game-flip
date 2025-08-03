@@ -167,7 +167,7 @@ export async function GET(request: Request) {
     // Return fallback data if database is not configured
     const anonToken = generateAnonToken();
     return Response.json({
-      games: FALLBACK_GAMES,
+      games: FALLBACK_GAMES.reverse(), // Show newest first
       anonToken,
       success: true,
       fallback: true

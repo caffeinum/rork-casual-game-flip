@@ -54,9 +54,9 @@ export default function SubmitGame() {
 
       if (response.ok && data.success) {
         Alert.alert(
-          'Success!',
-          'Your game has been submitted for review.',
-          [{ text: 'OK', onPress: () => router.back() }]
+          'Game Added! 🎮',
+          'Your game is now live in the feed!',
+          [{ text: 'Awesome!', onPress: () => router.replace('/') }]
         );
       } else {
         Alert.alert('Error', data.error || 'Failed to submit game');
