@@ -73,6 +73,28 @@ const GAMES_DATA = [
     previewGif: 'https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif',
     gameUrl: 'https://v0-agar-io-clone-xi.vercel.app/',
     highScore: 0
+  },
+  {
+    id: 'snake',
+    title: 'Snake',
+    description: 'Classic snake game',
+    type: 'webview',
+    image: 'https://images.unsplash.com/photo-1635322966219-b75ed372eb01?w=800&h=600&fit=crop',
+    previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    previewGif: 'https://media.giphy.com/media/3o7btZ1Gm7ZL25pLMs/giphy.gif',
+    gameUrl: 'https://v0-snake-game-design-dun.vercel.app/',
+    highScore: 0
+  },
+  {
+    id: 'space-invaders',
+    title: 'Space Invaders',
+    description: 'Defend earth from invaders',
+    type: 'webview',
+    image: 'https://images.unsplash.com/photo-1614726365952-510103b1bbb4?w=800&h=600&fit=crop',
+    previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    previewGif: 'https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif',
+    gameUrl: 'https://v0-space-flying-game.vercel.app/',
+    highScore: 0
   }
 ];
 
