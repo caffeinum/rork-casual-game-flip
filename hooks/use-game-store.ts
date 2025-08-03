@@ -19,27 +19,42 @@ export const [GameStoreProvider, useGameStore] = createContextHook(() => {
   const [games, setGames] = useState<Game[]>([]);
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [anonToken, setAnonToken] = useState<string | null>(null);
 
   const gamesQuery = useQuery({
     queryKey: ['games'],
     queryFn: async () => {
       try {
-        // Fetch games from API
-        const response = await fetch('/api/games');
+        // Get stored anon token
+        const storedToken = await AsyncStorage.getItem('anonToken');
+        
+        // Fetch games from API with anon token
+        const headers: HeadersInit = {};
+        if (storedToken) {
+          headers['x-anon-token'] = storedToken;
+        }
+        
+        const response = await fetch('/api/games', { headers });
         const data = await response.json();
         
         if (!response.ok || !data.success) {
           throw new Error('Failed to fetch games');
         }
         
-        // Get stored high scores
+        // Store anon token if we got a new one
+        if (data.anonToken && data.anonToken !== storedToken) {
+          await AsyncStorage.setItem('anonToken', data.anonToken);
+          setAnonToken(data.anonToken);
+        }
+        
+        // Get stored high scores (for offline support)
         const storedScores = await AsyncStorage.getItem('gameHighScores');
         const highScores = storedScores ? JSON.parse(storedScores) : {};
         
-        // Merge API games with stored high scores
+        // Merge API games with stored high scores (prefer server scores)
         const gamesWithScores = data.games.map((game: Game) => ({
           ...game,
-          highScore: highScores[game.id] || game.highScore || 0
+          highScore: game.highScore || highScores[game.id] || 0
         }));
         
         return gamesWithScores;
@@ -81,12 +96,33 @@ export const [GameStoreProvider, useGameStore] = createContextHook(() => {
     }
   };
 
-  const updateHighScore = (gameId: string, score: number) => {
+  const updateHighScore = async (gameId: string, score: number) => {
+    // Update local state immediately
     const updatedGames = games.map(game => 
       game.id === gameId ? { ...game, highScore: score } : game
     );
     setGames(updatedGames);
     syncMutation.mutate(updatedGames);
+    
+    // Sync with database if we have an anon token
+    if (anonToken) {
+      try {
+        const response = await fetch(`/api/games/${gameId}/score`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-anon-token': anonToken
+          },
+          body: JSON.stringify({ score })
+        });
+        
+        if (!response.ok) {
+          console.error('Failed to sync score with server');
+        }
+      } catch (error) {
+        console.error('Failed to sync score:', error);
+      }
+    }
   };
 
   return {

@@ -106,6 +106,7 @@ Defined in `/constants/colors.ts`:
 - Games now fetched from API with image, video preview, and game URLs
 - High scores stored locally while game data comes from backend
 - Both native and WebView games supported seamlessly
+- Added Snake and Space Invaders games via WebView integration
 
 ## Reminders
 - Remember to write frontend with escaped apos

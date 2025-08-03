@@ -48,6 +48,7 @@
     "@babel/core": "^7.25.2",
     "@expo/ngrok": "^4.1.0",
     "@types/react": "~19.0.10",
+    "dotenv": "^17.2.1",
     "sharp": "^0.34.3",
     "typescript": "~5.8.3"
   },
