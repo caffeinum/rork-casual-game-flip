@@ -26,5 +26,8 @@ jobs:
       - name: install dependencies
         run: bun install --frozen-lockfile
 
+      - name: export for web
+        run: npx expo export --platform web
+
       - name: deploy on eas  
         run: eas deploy
