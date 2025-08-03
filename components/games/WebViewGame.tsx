@@ -30,6 +30,10 @@ export function WebViewGame({ gameUrl, title, onGameOver }: WebViewGameProps) {
         source={{ uri: gameUrl }}
         style={{ flex: 1, marginTop: 80 }}
         onLoadEnd={() => setLoading(false)}
+        onError={(syntheticEvent) => {
+          const { nativeEvent } = syntheticEvent;
+          console.warn('WebView error: ', nativeEvent);
+        }}
         javaScriptEnabled
         domStorageEnabled
         startInLoadingState
@@ -37,6 +41,9 @@ export function WebViewGame({ gameUrl, title, onGameOver }: WebViewGameProps) {
         mixedContentMode="compatibility"
         allowsInlineMediaPlayback
         mediaPlaybackRequiresUserAction={false}
+        originWhitelist={['*']}
+        allowsFullscreenVideo
+        allowsProtectedMedia
       />
     </View>
   );

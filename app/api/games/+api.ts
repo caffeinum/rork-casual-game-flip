@@ -38,7 +38,7 @@ const GAMES_DATA = [
     image: 'https://images.unsplash.com/photo-1567447013110-3df4406cea10?w=800&h=600&fit=crop',
     previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
     previewGif: 'https://media.giphy.com/media/euuaA2cwLEUuI/giphy.gif',
-    gameUrl: 'https://flappybird.io/',
+    gameUrl: 'https://playcanv.as/p/2OlkUaxF/',
     highScore: 0
   },
   {
@@ -49,7 +49,29 @@ const GAMES_DATA = [
     image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&h=600&fit=crop',
     previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
     previewGif: 'https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif',
-    gameUrl: 'https://play2048.co/',
+    gameUrl: 'https://hczhcz.github.io/2048/20ez/',
+    highScore: 0
+  },
+  {
+    id: 'fly-game',
+    title: 'Fly Game',
+    description: 'Navigate through obstacles',
+    type: 'webview',
+    image: 'https://images.unsplash.com/photo-1570527140771-020891229bb4?w=800&h=600&fit=crop',
+    previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    previewGif: 'https://media.giphy.com/media/3o7btZ1Gm7ZL25pLMs/giphy.gif',
+    gameUrl: 'https://fly.pieter.com',
+    highScore: 0
+  },
+  {
+    id: 'agar-io',
+    title: 'Agar.io Clone',
+    description: 'Grow by eating cells (by quasa)',
+    type: 'webview',
+    image: 'https://images.unsplash.com/photo-1614028674026-a65e31bfd27c?w=800&h=600&fit=crop',
+    previewVideo: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    previewGif: 'https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif',
+    gameUrl: 'https://v0-agar-io-clone-xi.vercel.app/',
     highScore: 0
   }
 ];
