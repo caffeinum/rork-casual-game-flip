@@ -22,21 +22,17 @@ const Hero = () => {
             <Ghost className="w-24 h-24 mx-auto text-snap-white drop-shadow-lg" />
           </div>
           
-          {/* Main heading - Responsive for mobile */}
+          {/* Main heading - Original text with Snapchat style */}
           <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black mb-4 sm:mb-6 text-snap-white drop-shadow-2xl leading-tight animate-slide-up">
-            Play Games
+            Discover Great Games,
             <br />
-            <span className="text-snap-black">Instantly!</span>
+            <span className="text-snap-black">Fast</span>
           </h1>
           
-          {/* Subheading */}
-          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-snap-black mb-6 sm:mb-8 animate-slide-up delay-200">
-            Swipe • Play • Repeat 🔥
-          </p>
-          
-          {/* Simple description */}
-          <p className="text-base sm:text-lg text-snap-black/80 mb-8 sm:mb-12 max-w-2xl mx-auto animate-slide-up delay-300 px-4">
-            No downloads, no ads, no BS. Just pure gaming fun in seconds! meow! 🐱
+          {/* Original description with Snapchat styling */}
+          <p className="text-base sm:text-lg text-snap-black/80 mb-8 sm:mb-12 max-w-2xl mx-auto animate-slide-up delay-200 px-4 leading-relaxed">
+            Swipe through instant-play games in seconds. No downloads, no ads, no friction. 
+            Just pure gameplay in a TikTok-style feed designed for gamers.
           </p>
           
           {/* Mobile-optimized buttons */}
