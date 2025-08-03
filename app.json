@@ -15,7 +15,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.rork.casual-game-flip"
+      "bundleIdentifier": "app.rork.casual-game-flip",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,18 +28,27 @@
       "package": "app.rork.casual-game-flip"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "output": "server"
     },
     "plugins": [
       [
         "expo-router",
         {
-          "origin": "https://rork.com/"
+          "origin": "https://rork-casual-game-flip.vercel.app/"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": "https://rork-casual-game-flip.vercel.app/"
+      },
+      "eas": {
+        "projectId": "9ecffee8-084f-4291-b9ce-5da66fbc085a"
+      }
     }
   }
 }

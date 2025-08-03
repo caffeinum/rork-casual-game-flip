@@ -3,7 +3,6 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import createContextHook from '@nkzw/create-context-hook';
 import { useState, useEffect } from 'react';
 import { Game } from '@/types/game';
-import { GAMES } from '@/mocks/games';
 
 interface GameStore {
   games: Game[];
@@ -25,23 +24,41 @@ export const [GameStoreProvider, useGameStore] = createContextHook(() => {
     queryKey: ['games'],
     queryFn: async () => {
       try {
-        const storedGames = await AsyncStorage.getItem('games');
-        if (storedGames) {
-          return JSON.parse(storedGames) as Game[];
+        // Fetch games from API
+        const response = await fetch('/api/games');
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+          throw new Error('Failed to fetch games');
         }
-        // Initialize with mock data if no stored games
-        await AsyncStorage.setItem('games', JSON.stringify(GAMES));
-        return GAMES;
+        
+        // Get stored high scores
+        const storedScores = await AsyncStorage.getItem('gameHighScores');
+        const highScores = storedScores ? JSON.parse(storedScores) : {};
+        
+        // Merge API games with stored high scores
+        const gamesWithScores = data.games.map((game: Game) => ({
+          ...game,
+          highScore: highScores[game.id] || game.highScore || 0
+        }));
+        
+        return gamesWithScores;
       } catch (error) {
         console.error('Failed to load games:', error);
-        return GAMES;
+        // Return empty array on error
+        return [];
       }
     }
   });
 
   const syncMutation = useMutation({
     mutationFn: async (updatedGames: Game[]) => {
-      await AsyncStorage.setItem('games', JSON.stringify(updatedGames));
+      // Only store high scores, not the full games data
+      const highScores = updatedGames.reduce((acc, game) => ({
+        ...acc,
+        [game.id]: game.highScore || 0
+      }), {});
+      await AsyncStorage.setItem('gameHighScores', JSON.stringify(highScores));
       return updatedGames;
     }
   });

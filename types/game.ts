@@ -2,8 +2,11 @@ export interface Game {
   id: string;
   title: string;
   description: string;
+  image: string;
+  previewVideo?: string;
   previewGif: string;
-  type: 'tapSpeed' | 'memoryMatch' | 'colorMatch';
+  type: 'native' | 'webview';
+  gameUrl?: string; // For webview games
   highScore?: number;
 }
 

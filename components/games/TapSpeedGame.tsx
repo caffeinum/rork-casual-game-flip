@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { COLORS } from '@/constants/colors';
-import { useGameStore } from '@/hooks/use-game-store';
 import { X } from 'lucide-react-native';
 
 const { width, height } = Dimensions.get('window');
 const GAME_DURATION = 10; // seconds
 
-export default function TapSpeedGame() {
-  const { endGame } = useGameStore();
+interface TapSpeedGameProps {
+  onGameOver: (score: number) => void;
+}
+
+export default function TapSpeedGame({ onGameOver }: TapSpeedGameProps) {
   const [taps, setTaps] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [gameStarted, setGameStarted] = useState(false);
@@ -33,9 +35,9 @@ export default function TapSpeedGame() {
 
   useEffect(() => {
     if (gameOver) {
-      endGame(taps);
+      onGameOver(taps);
     }
-  }, [gameOver, taps, endGame]);
+  }, [gameOver, taps, onGameOver]);
 
   const handleTap = useCallback(() => {
     if (!gameStarted) {
@@ -50,11 +52,11 @@ export default function TapSpeedGame() {
   const handleClose = useCallback(() => {
     if (gameStarted && !gameOver) {
       setGameOver(true);
-      endGame(taps);
+      onGameOver(taps);
     } else {
-      endGame(0);
+      onGameOver(0);
     }
-  }, [gameStarted, gameOver, taps, endGame]);
+  }, [gameStarted, gameOver, taps, onGameOver]);
 
   const restartGame = useCallback(() => {
     setTaps(0);

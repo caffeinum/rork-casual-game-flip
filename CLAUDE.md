@@ -21,13 +21,29 @@ bun run start-web-dev
 
 All commands use `rork` CLI with project ID `di1b0xsrk9v47dniceypv`.
 
+## API Routes
+
+The app uses Expo API routes located in `/app/api/`:
+- `/api/games` - GET endpoint that returns games list with:
+  - `id`: Unique game identifier
+  - `title`: Game display name
+  - `description`: Short game description
+  - `image`: Cover image URL
+  - `previewVideo`: Video preview URL (optional)
+  - `previewGif`: Animated GIF preview
+  - `type`: Either "native" (built-in) or "webview" (external URL)
+  - `gameUrl`: External game URL (for webview games only)
+  - `highScore`: User's high score
+
 ## Architecture
 
 ### Game Types
-The app supports three game types defined in `types/game.ts`:
-- `tapSpeed` - Speed tapping challenge
-- `memoryMatch` - Memory card matching game  
-- `colorMatch` - Color matching game
+The app supports two types of games:
+1. **Native Games** - Built-in React Native components:
+   - `tap-speed` - Speed tapping challenge
+   - `memory-match` - Memory card matching game  
+   - `color-match` - Color matching game
+2. **WebView Games** - External games loaded via WebView with URLs
 
 ### Navigation Structure
 - **Expo Router** (file-based routing) in `/app` directory
@@ -43,18 +59,20 @@ The app supports three game types defined in `types/game.ts`:
 
 ### Component Structure
 - `/components/games/` - Individual game implementations:
-  - `TapSpeedGame.tsx`
-  - `MemoryMatchGame.tsx`
-  - `ColorMatchGame.tsx`
-- `/components/GameContainer.tsx` - Shared game UI wrapper
+  - `TapSpeedGame.tsx` - Native tap speed game
+  - `MemoryMatchGame.tsx` - Native memory matching game
+  - `ColorMatchGame.tsx` - Native color matching game
+  - `WebViewGame.tsx` - WebView wrapper for external games
+- `/components/GameContainer.tsx` - Routes games to appropriate component
 - `/components/GamePreview.tsx` - Game card display component
 
 ### Key Technical Stack
 - **NativeWind** v4 for Tailwind-style styling
 - **React Query** for async state management
-- **AsyncStorage** for local data persistence
+- **AsyncStorage** for local data persistence (high scores only)
 - **Expo Haptics** for tactile feedback
 - **React Native Gesture Handler** for swipe interactions
+- **React Native WebView** for external game integration
 - **Lucide React Native** for icons
 
 ## Important Patterns
@@ -73,10 +91,21 @@ Defined in `/constants/colors.ts`:
 - High contrast for readability
 
 ### Data Flow
-1. Games are loaded from AsyncStorage or initialized with mock data
-2. High scores are automatically persisted after each game
-3. Game carousel maintains current selection index
-4. Modal presentation for immersive gameplay
+1. Games list is fetched from `/api/games` endpoint
+2. High scores are stored locally in AsyncStorage
+3. Game data from API is merged with local high scores
+4. Game carousel maintains current selection index
+5. Native games are rendered as React components
+6. WebView games load external URLs in iframe/webview
+
+## Recent Updates
+
+### Backend Integration (2025-08-03)
+- Added Expo API routes with `/api/games` endpoint
+- Implemented WebView game support for external games
+- Games now fetched from API with image, video preview, and game URLs
+- High scores stored locally while game data comes from backend
+- Both native and WebView games supported seamlessly
 
 ## Reminders
 - Remember to write frontend with escaped apos

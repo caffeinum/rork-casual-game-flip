@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { COLORS } from '@/constants/colors';
-import { useGameStore } from '@/hooks/use-game-store';
 import { X } from 'lucide-react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -21,8 +20,11 @@ interface ColorChallenge {
   correctAnswer: boolean;
 }
 
-export default function ColorMatchGame() {
-  const { endGame } = useGameStore();
+interface ColorMatchGameProps {
+  onGameOver: (score: number) => void;
+}
+
+export default function ColorMatchGame({ onGameOver }: ColorMatchGameProps) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameStarted, setGameStarted] = useState(false);
@@ -75,9 +77,9 @@ export default function ColorMatchGame() {
 
   useEffect(() => {
     if (gameOver) {
-      endGame(score);
+      onGameOver(score);
     }
-  }, [gameOver, score, endGame]);
+  }, [gameOver, score, onGameOver]);
 
   const handleAnswer = useCallback((userAnswer: boolean) => {
     if (!currentChallenge || gameOver) return;
@@ -100,11 +102,11 @@ export default function ColorMatchGame() {
   const handleClose = useCallback(() => {
     if (gameStarted && !gameOver) {
       setGameOver(true);
-      endGame(score);
+      onGameOver(score);
     } else {
-      endGame(0);
+      onGameOver(0);
     }
-  }, [gameStarted, gameOver, score, endGame]);
+  }, [gameStarted, gameOver, score, onGameOver]);
 
   return (
     <View style={styles.container} testID="color-match-game">

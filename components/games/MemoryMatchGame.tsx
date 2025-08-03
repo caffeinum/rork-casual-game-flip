@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { COLORS } from '@/constants/colors';
-import { useGameStore } from '@/hooks/use-game-store';
 import { X } from 'lucide-react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -16,8 +15,11 @@ interface Card {
   matched: boolean;
 }
 
-export default function MemoryMatchGame() {
-  const { endGame } = useGameStore();
+interface MemoryMatchGameProps {
+  onGameOver: (score: number) => void;
+}
+
+export default function MemoryMatchGame({ onGameOver }: MemoryMatchGameProps) {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -87,9 +89,9 @@ export default function MemoryMatchGame() {
   useEffect(() => {
     if (matchedPairs === SYMBOLS.length && !gameOver) {
       setGameOver(true);
-      endGame(100 - moves * 5); // Score based on fewer moves
+      onGameOver(100 - moves * 5); // Score based on fewer moves
     }
-  }, [matchedPairs, gameOver, moves, endGame]);
+  }, [matchedPairs, gameOver, moves, onGameOver]);
 
   const handleCardPress = useCallback((cardId: number) => {
     // Ignore if already two cards flipped or card is already flipped/matched
@@ -110,11 +112,11 @@ export default function MemoryMatchGame() {
 
   const handleClose = useCallback(() => {
     if (gameOver) {
-      endGame(100 - moves * 5);
+      onGameOver(100 - moves * 5);
     } else {
-      endGame(0);
+      onGameOver(0);
     }
-  }, [gameOver, moves, endGame]);
+  }, [gameOver, moves, onGameOver]);
 
   return (
     <View style={styles.container} testID="memory-match-game">
