@@ -1,88 +1,80 @@
-import { Card } from "@/components/ui/card";
-import { Zap, Heart, Brain, Timer, Gamepad2, Sparkles } from "lucide-react";
-
 const Features = () => {
   const features = [
     {
-      icon: Zap,
-      title: "Instant Gratification",
-      description: "Games that spark joy in 5 seconds or less. No tutorials, no waiting, just pure fun.",
-      color: "text-game-yellow",
-      gradient: "from-game-yellow/20 to-transparent"
+      emoji: "⚡",
+      title: "Instant Play",
+      description: "No downloads, pure fun!",
     },
     {
-      icon: Heart,
-      title: "Vibe-Coded Curation",
-      description: "AI-curated games that respect your time and intelligence. No pay-to-win, no energy systems.",
-      color: "text-game-coral",
-      gradient: "from-game-coral/20 to-transparent"
+      emoji: "🎯", 
+      title: "Smart Picks",
+      description: "AI finds your vibe",
     },
     {
-      icon: Brain,
-      title: "Smart Algorithm",
-      description: "AI that learns your gaming mood. Whether you want zen puzzles or adrenaline rushes.",
-      color: "text-game-purple",
-      gradient: "from-game-purple/20 to-transparent"
-    },
-    {
-      icon: Timer,
-      title: "Context Aware",
-      description: "Waiting for the bus? Here's a 2-minute brain teaser. Lunch break? Try this chill puzzle.",
-      color: "text-game-blue",
-      gradient: "from-game-blue/20 to-transparent"
-    },
-    {
-      icon: Gamepad2,
-      title: "Mobile Optimized",
-      description: "Every game is crafted for mobile play. Touch controls that feel natural and responsive.",
-      color: "text-game-coral-light",
-      gradient: "from-game-coral-light/20 to-transparent"
-    },
-    {
-      icon: Sparkles,
-      title: "Hidden Gems",
-      description: "Discover indie experiments and classic games reimagined. Your personal game sommelier.",
-      color: "text-game-yellow",
-      gradient: "from-game-yellow/20 to-transparent"
+      emoji: "📱",
+      title: "Mobile First", 
+      description: "Perfect touch controls",
     }
   ];
 
   return (
-    <section className="py-24 px-6 bg-background relative">
-      {/* Background decorations */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/30 to-transparent"></div>
+    <section className="py-12 sm:py-16 px-4 sm:px-6 bg-snap-white relative overflow-hidden">
+      {/* Floating elements */}
+      <div className="absolute top-10 left-10 text-2xl animate-float opacity-30">🎮</div>
+      <div className="absolute top-20 right-20 text-2xl animate-float delay-75 opacity-30">🕹️</div>
+      <div className="absolute bottom-10 left-20 text-2xl animate-float delay-150 opacity-30">🎲</div>
+      <div className="absolute bottom-20 right-10 text-2xl animate-float delay-300 opacity-30">⭐</div>
       
       <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 bg-hero-gradient bg-clip-text text-transparent">
-            Why Casual Game Flip?
+        <div className="text-center mb-8 sm:mb-12 px-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-3 sm:mb-4 text-snap-black animate-bounce-in">
+            Why Choose Us? 🤔
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We're not just another game platform. We're revolutionizing how you discover and play games, 
-            making every swipe a delightful surprise.
+          <p className="text-lg sm:text-xl text-snap-black/70 font-bold animate-slide-up delay-200">
+            Because we're awesome, meow! 🐱✨
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-4">
           {features.map((feature, index) => (
-            <Card 
+            <div 
               key={index} 
-              className="relative p-8 bg-card-gradient border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-card group overflow-hidden"
+              className={`bg-snap-yellow/20 backdrop-blur-sm p-6 sm:p-8 rounded-2xl sm:rounded-3xl border-3 sm:border-4 border-snap-black shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 group animate-swipe-${index % 2 === 0 ? 'left' : 'right'} touch-manipulation`}
+              style={{ animationDelay: `${index * 200}ms` }}
             >
-              {/* Background gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-              
-              <div className="relative z-10">
-                <feature.icon className={`w-12 h-12 ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-300`} />
-                <h3 className="text-xl font-semibold mb-4 text-foreground">
+              <div className="text-center">
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4 group-hover:animate-wiggle">
+                  {feature.emoji}
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black mb-2 sm:mb-3 text-snap-black group-hover:text-snap-yellow transition-colors duration-200">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-snap-black/80 font-semibold text-base sm:text-lg">
                   {feature.description}
                 </p>
               </div>
-            </Card>
+            </div>
           ))}
+        </div>
+
+        {/* Mobile-optimized stats */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 max-w-3xl mx-auto px-4">
+          <div className="text-center bg-snap-black text-snap-yellow p-4 sm:p-6 rounded-2xl sm:rounded-3xl animate-bounce-in delay-700 touch-manipulation hover:scale-105 active:scale-95 transition-transform">
+            <div className="text-2xl sm:text-3xl font-black">1000+</div>
+            <div className="text-xs sm:text-sm font-bold">Games</div>
+          </div>
+          <div className="text-center bg-snap-black text-snap-yellow p-4 sm:p-6 rounded-2xl sm:rounded-3xl animate-bounce-in delay-800 touch-manipulation hover:scale-105 active:scale-95 transition-transform">
+            <div className="text-2xl sm:text-3xl font-black">0s</div>
+            <div className="text-xs sm:text-sm font-bold">Wait Time</div>
+          </div>
+          <div className="text-center bg-snap-black text-snap-yellow p-4 sm:p-6 rounded-2xl sm:rounded-3xl animate-bounce-in delay-900 touch-manipulation hover:scale-105 active:scale-95 transition-transform">
+            <div className="text-2xl sm:text-3xl font-black">100%</div>
+            <div className="text-xs sm:text-sm font-bold">Free</div>
+          </div>
+          <div className="text-center bg-snap-black text-snap-yellow p-4 sm:p-6 rounded-2xl sm:rounded-3xl animate-bounce-in delay-1000 touch-manipulation hover:scale-105 active:scale-95 transition-transform">
+            <div className="text-2xl sm:text-3xl font-black">∞</div>
+            <div className="text-xs sm:text-sm font-bold">Fun</div>
+          </div>
         </div>
       </div>
     </section>

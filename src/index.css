@@ -8,54 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    /* Snapchat color scheme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
 
-    --card: 240 8% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
 
-    --popover: 240 8% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 348 83% 68%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 64 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 195 100% 60%;
-    --secondary-foreground: 240 10% 4%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 4% 65%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 45 93% 58%;
-    --accent-foreground: 240 10% 4%;
+    --accent: 64 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 6% 15%;
-    --input: 240 6% 15%;
-    --ring: 348 83% 68%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 64 100% 50%;
 
-    --radius: 1rem;
+    --radius: 1.5rem;
 
-    /* Gaming-specific colors and gradients */
-    --game-coral: 348 83% 68%;
-    --game-coral-light: 348 83% 75%;
-    --game-blue: 195 100% 60%;
-    --game-blue-light: 195 100% 70%;
-    --game-yellow: 45 93% 58%;
-    --game-purple: 260 90% 65%;
+    /* Snapchat-style colors */
+    --snap-yellow: 64 100% 50%;
+    --snap-yellow-light: 64 100% 85%;
+    --snap-blue: 200 100% 50%;
+    --snap-white: 0 0% 100%;
+    --snap-black: 0 0% 0%;
+    --snap-gray: 0 0% 96%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(348 83% 68%), hsl(195 100% 60%));
-    --gradient-card: linear-gradient(145deg, hsl(240 8% 6%), hsl(240 6% 10%));
-    --gradient-accent: linear-gradient(90deg, hsl(348 83% 68%), hsl(45 93% 58%));
-    --gradient-glow: linear-gradient(135deg, hsl(348 83% 68% / 0.3), hsl(195 100% 60% / 0.3));
+    --gradient-hero: linear-gradient(135deg, hsl(64 100% 50%), hsl(200 100% 50%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 96%));
+    --gradient-accent: linear-gradient(90deg, hsl(64 100% 50%), hsl(200 100% 50%));
+    --gradient-glow: radial-gradient(circle, hsl(64 100% 50% / 0.3), transparent);
     
     /* Shadows and effects */
-    --shadow-glow: 0 0 40px hsl(348 83% 68% / 0.3);
-    --shadow-blue-glow: 0 0 40px hsl(195 100% 60% / 0.3);
-    --shadow-card: 0 8px 32px hsl(240 10% 4% / 0.6);
+    --shadow-glow: 0 0 30px hsl(64 100% 50% / 0.4);
+    --shadow-blue-glow: 0 0 30px hsl(200 100% 50% / 0.4);
+    --shadow-card: 0 10px 25px hsl(0 0% 0% / 0.1);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,5 +130,52 @@ All colors MUST be HSL.
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Nata Sans', sans-serif;
     font-weight: 700;
+  }
+
+  /* iOS Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS Safari */
+    .touch-manipulation {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* Fix for iOS Safari viewport height issues */
+    .min-h-screen {
+      min-height: -webkit-fill-available;
+    }
+    
+    /* Smooth scrolling on iOS */
+    html {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+    
+    /* Fix button appearance on iOS */
+    button {
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Improve touch targets */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }

@@ -62,12 +62,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				'game-coral': 'hsl(var(--game-coral))',
-				'game-coral-light': 'hsl(var(--game-coral-light))',
-				'game-blue': 'hsl(var(--game-blue))',
-				'game-blue-light': 'hsl(var(--game-blue-light))',
-				'game-yellow': 'hsl(var(--game-yellow))',
-				'game-purple': 'hsl(var(--game-purple))'
+				'snap-yellow': 'hsl(var(--snap-yellow))',
+				'snap-yellow-light': 'hsl(var(--snap-yellow-light))',
+				'snap-blue': 'hsl(var(--snap-blue))',
+				'snap-white': 'hsl(var(--snap-white))',
+				'snap-black': 'hsl(var(--snap-black))',
+				'snap-gray': 'hsl(var(--snap-gray))'
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--gradient-hero)',
@@ -117,6 +117,29 @@ export default {
 				'slide-up': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'bounce-in': {
+					'0%': { transform: 'scale(0.3)', opacity: '0' },
+					'50%': { transform: 'scale(1.05)' },
+					'70%': { transform: 'scale(0.9)' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'swipe-left': {
+					'0%': { transform: 'translateX(100px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' }
+				},
+				'swipe-right': {
+					'0%': { transform: 'translateX(-100px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' }
+				},
+				'wiggle': {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				'pop': {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.1)' },
+					'100%': { transform: 'scale(1)' }
 				}
 			},
 			animation: {
@@ -124,7 +147,12 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-				'slide-up': 'slide-up 0.6s ease-out'
+				'slide-up': 'slide-up 0.6s ease-out',
+				'bounce-in': 'bounce-in 0.8s ease-out',
+				'swipe-left': 'swipe-left 0.5s ease-out',
+				'swipe-right': 'swipe-right 0.5s ease-out',
+				'wiggle': 'wiggle 1s ease-in-out infinite',
+				'pop': 'pop 0.3s ease-in-out'
 			}
 		}
 	},
