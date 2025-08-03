@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, FlatList, Dimensions, Platform } from 'react-native';
+import { StyleSheet, View, FlatList, Dimensions, Platform, TouchableOpacity } from 'react-native';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import { COLORS } from '@/constants/colors';
 import GamePreview from '@/components/GamePreview';
 import GameContainer from '@/components/GameContainer';
 import { useGameStore } from '@/hooks/use-game-store';
+import { Plus } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 const { height } = Dimensions.get('window');
 
@@ -84,6 +86,14 @@ export default function GameFeedScreen() {
             }}
           />
         )}
+        {!isPlaying && (
+          <TouchableOpacity 
+            style={styles.submitButton}
+            onPress={() => router.push('/submit-game')}
+          >
+            <Plus color={COLORS.text} size={24} />
+          </TouchableOpacity>
+        )}
       </View>
     </PinchGestureHandler>
   );
@@ -97,5 +107,24 @@ const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     backgroundColor: COLORS.background,
+  },
+  submitButton: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

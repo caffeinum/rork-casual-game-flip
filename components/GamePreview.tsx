@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Game } from '@/types/game';
 import { COLORS } from '@/constants/colors';
-import { Play } from 'lucide-react-native';
+import { Play, Shuffle } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 interface GamePreviewProps {
   game: Game;
@@ -12,6 +13,19 @@ interface GamePreviewProps {
 const { width, height } = Dimensions.get('window');
 
 export default function GamePreview({ game, onPlay }: GamePreviewProps) {
+  const handleRemix = () => {
+    // Navigate to submit game with prefilled data
+    router.push({
+      pathname: '/submit-game',
+      params: {
+        remix: 'true',
+        name: game.title,
+        gif: game.previewGif,
+        url: game.gameUrl || ''
+      }
+    });
+  };
+
   return (
     <View style={styles.container} testID={`game-preview-${game.id}`}>
       <Image 
@@ -27,14 +41,26 @@ export default function GamePreview({ game, onPlay }: GamePreviewProps) {
             <Text style={styles.highScore}>High Score: {game.highScore}</Text>
           )}
         </View>
-        <TouchableOpacity 
-          style={styles.playButton} 
-          onPress={onPlay}
-          testID={`play-button-${game.id}`}
-        >
-          <Play color={COLORS.text} size={24} />
-          <Text style={styles.playText}>PLAY</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={styles.playButton} 
+            onPress={onPlay}
+            testID={`play-button-${game.id}`}
+          >
+            <Play color={COLORS.text} size={24} />
+            <Text style={styles.playText}>PLAY</Text>
+          </TouchableOpacity>
+          {game.type === 'webview' && (
+            <TouchableOpacity 
+              style={styles.remixButton} 
+              onPress={handleRemix}
+              testID={`remix-button-${game.id}`}
+            >
+              <Shuffle color={COLORS.text} size={20} />
+              <Text style={styles.remixText}>REMIX</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -76,6 +102,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 40,
+  },
   playButton: {
     backgroundColor: COLORS.primary,
     flexDirection: 'row',
@@ -84,13 +117,28 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 24,
-    alignSelf: 'center',
-    marginBottom: 40,
   },
   playText: {
     color: COLORS.text,
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 8,
+  },
+  remixButton: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+  },
+  remixText: {
+    color: COLORS.text,
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 6,
   }
 });

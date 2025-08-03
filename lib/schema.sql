@@ -25,6 +25,25 @@ CREATE TABLE IF NOT EXISTS high_scores (
 -- Index for faster queries
 CREATE INDEX IF NOT EXISTS idx_high_scores_game_token ON high_scores(game_id, anon_token);
 
+-- Game submissions table
+CREATE TABLE IF NOT EXISTS game_submissions (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL,
+  description TEXT,
+  preview_gif TEXT NOT NULL,
+  game_url TEXT NOT NULL,
+  submitted_by TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  reviewed_at TIMESTAMP,
+  review_notes TEXT
+);
+
+-- Index for faster queries
+CREATE INDEX IF NOT EXISTS idx_submissions_status ON game_submissions(status);
+CREATE INDEX IF NOT EXISTS idx_submissions_author ON game_submissions(author);
+
 -- Insert initial games data
 INSERT INTO games (id, title, description, image, preview_video, preview_gif, type, game_url) VALUES
   ('tap-speed', 'Tap Speed', 'How fast can you tap?', 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop', 'https://www.w3schools.com/html/mov_bbb.mp4', 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif', 'native', NULL),
