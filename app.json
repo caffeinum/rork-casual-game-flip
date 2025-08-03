@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "app.rork.casual-game-flip"
+      "package": "app.rork.casualgameflip"
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
