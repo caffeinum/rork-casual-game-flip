@@ -138,7 +138,10 @@ export default function GameFeedScreen() {
             const index = Math.round(
               event.nativeEvent.contentOffset.y / height
             );
-            setCurrentGameIndex(index);
+            if (index !== currentGameIndex) {
+              setCurrentGameIndex(index);
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }
           }}
         />
         <TouchableOpacity 

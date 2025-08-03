@@ -5,6 +5,7 @@ import { COLORS } from '@/constants/colors';
 import { Play, Shuffle, X, ChevronUp, ChevronDown } from 'lucide-react-native';
 import { router } from 'expo-router';
 import GameContainer from '@/components/GameContainer';
+import * as Haptics from 'expo-haptics';
 
 interface GamePreviewProps {
   game: Game;
@@ -38,6 +39,7 @@ export default function GamePreview({ game, onPlay, isActive, onPlayingChange, o
   const handlePlay = () => {
     setIsPlaying(true);
     onPlay();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const handleClose = () => {
