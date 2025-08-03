@@ -35,7 +35,7 @@
       [
         "expo-router",
         {
-          "origin": "https://rork-casual-game-flip.vercel.app/"
+          "origin": "https://casual-game-flip.expo.app/"
         }
       ]
     ],
@@ -44,7 +44,7 @@
     },
     "extra": {
       "router": {
-        "origin": "https://rork-casual-game-flip.vercel.app/"
+        "origin": "https://casual-game-flip.expo.app/"
       },
       "eas": {
         "projectId": "9ecffee8-084f-4291-b9ce-5da66fbc085a"
