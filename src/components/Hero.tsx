@@ -28,7 +28,7 @@ const Hero = () => {
             <span className="text-snap-black drop-shadow-[0_4px_8px_rgba(255,255,255,0.8)]">Games</span>
             <span className="text-snap-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">,</span>
             <br />
-            <span className="text-snap-black drop-shadow-[0_4px_8px_rgba(255,255,255,0.8)]">Fast</span>
+            <span className="text-snap-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">Fast</span>
           </h1>
           
           {/* More prominent description */}
