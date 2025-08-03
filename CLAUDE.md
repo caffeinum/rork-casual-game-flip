@@ -108,6 +108,11 @@ Defined in `/constants/colors.ts`:
 - Both native and WebView games supported seamlessly
 - Added Snake and Space Invaders games via WebView integration
 
+### UI/UX Updates (2025-08-03)
+- Expanded game tiles to full screen height for immersive experience
+- Auto-play functionality: games start automatically when swiped into view
+- Adjusted UI element positioning for full-height display
+
 ## Reminders
 - Remember to write frontend with escaped apos
 - Do not run `bun run start` or `bun run start-web` for expo app. Run it manually on a separate tab
